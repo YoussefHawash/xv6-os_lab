@@ -104,3 +104,35 @@ memmove(void *vdst, const void *vsrc, int n)
     *dst++ = *src++;
   return vdst;
 }
+// Implementations of sqaure root influenced by an implementation online
+float sqrt(float x)
+{
+    float guess, eps;
+
+    if (x <= 0)
+        return 0;
+
+    guess = x;
+    eps = 0.00001f;
+
+    while ((guess * guess - x) > eps ||
+           (x - guess * guess) > eps)
+    {
+        guess = (guess + x / guess) / 2.0f;
+    }
+
+    return guess;
+}
+// anything to signed integer
+int atosi(const char *s)
+{
+  int sign = 1;
+  int n = 0;
+
+  if (*s == '-') {
+    sign = -1;
+    s++;
+  }
+ n = atoi(s);
+  return sign * n;
+}

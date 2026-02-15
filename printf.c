@@ -34,8 +34,52 @@ printint(int fd, int xx, int base, int sgn)
   while(--i >= 0)
     putc(fd, buf[i]);
 }
+static void printfloat(int fd,double xx, int base, int sgn,int accuracy ) // double because the compiler promotes float to double when passed through '...' , No rounfing
+{
+   static char digits[] = "0123456789ABCDEF";
+  char buf[16];
+  int i, neg; 
+  uint acc_point =1;
+  float x;
+  uint intpart, fracpart;
+  if (accuracy <= 6 && accuracy > 0) //limit to 6 decimal places, so it is reliable 
+  {
+   while (accuracy-- > 0) {
+     acc_point *= 10;
+   }
+}
+   else acc_point = 1000000; 
 
-// Print to the given fd. Only understands %d, %x, %p, %s.
+  neg = 0;
+  if(sgn && xx < 0){
+    neg = 1;
+    x = -xx;
+  } else {
+    x = xx;
+  }
+ 
+
+  intpart = (uint)x;
+
+  fracpart = (uint)((x - intpart) * acc_point);  
+
+  i = 0;
+  do{
+      buf[i++] = digits[fracpart % base];
+  }while((fracpart /= base) != 0);
+  
+  buf[i++] = '.';
+  
+  do{
+      buf[i++] = digits[intpart % base];
+  }while((intpart /= base) != 0);
+  if(neg)
+    buf[i++] = '-';
+  while(--i >= 0)
+    putc(fd, buf[i]);
+
+}
+// Print to the given fd. Only understands %d, %x, %p, %s (%f and %.accf ADDED).
 void
 printf(int fd, const char *fmt, ...)
 {
@@ -69,7 +113,31 @@ printf(int fd, const char *fmt, ...)
           putc(fd, *s);
           s++;
         }
-      } else if(c == 'c'){
+        
+      }else if(c == 'f'){
+        printfloat(fd, *(double*)ap, 10, 1, 3); // Default accuracy of 3 decimal places
+        ap+=2; // Move past the double argument (which takes 2 uints)
+      }  else if (c== '.')
+      {
+        int accuracy = 0;
+        i++;
+        c = fmt[i++] & 0xff;
+        while (c >= '0' && c <= '9') {
+          accuracy = accuracy * 10 + (c - '0');
+          c = fmt[i] & 0xff;
+        }
+        if (c == 'f') {
+          printfloat(fd, *(double*)ap, 10, 1, accuracy);
+          ap+=2; // Move past the double argument (which takes 2 uints)
+        } 
+        else 
+        {
+           // Unknown % sequence.  Print it to draw attention.
+        putc(fd, '%');
+        putc(fd, c);
+        }
+      }
+      else if(c == 'c'){
         putc(fd, *ap);
         ap++;
       } else if(c == '%'){
