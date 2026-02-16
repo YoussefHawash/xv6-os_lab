@@ -6,7 +6,7 @@ int
 main(int argc, char *argv[])
 {
    if (argc < 2) {
-      printf(2, "Usage: printstats <number_of_iterations>\n");
+      printf(2, "Usage: printstats <numbers>\n");
       exit();
    }
    float avg = 0.0;
