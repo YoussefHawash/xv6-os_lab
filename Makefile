@@ -186,7 +186,7 @@ UPROGS=\
 	_sort\
 	_tasks\
 	_testmeminfo\
-
+	_process_hierarchy\
 
 fs.img: mkfs README $(UPROGS)
 	./mkfs fs.img README $(UPROGS)

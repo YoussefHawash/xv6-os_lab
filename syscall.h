@@ -23,3 +23,4 @@
 #define SYS_getpinfo 22
 #define SYS_listproc 23
 #define SYS_sysinfo  24
+#define SYS_getppid  25
