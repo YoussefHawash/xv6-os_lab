@@ -94,9 +94,7 @@ kalloc(void)
   return (char*)r;
 }
 
-// Count free and used physical memory pages.
-// Total usable pages = all pages from PGROUNDUP(end) to PHYSTOP.
-// Used pages = total - free pages currently on the freelist.
+// walk freelist to count free pages, compute total from mem layout
 void
 getmeminfo_counts(int *free_pages, int *used_pages)
 {
@@ -114,8 +112,6 @@ getmeminfo_counts(int *free_pages, int *used_pages)
   if(kmem.use_lock)
     release(&kmem.lock);
 
-  // All pages from the end of the kernel image up to PHYSTOP are managed
-  // by the allocator (added via kinit1 + kinit2).
   total = (PHYSTOP - (uint)V2P(PGROUNDUP((uint)end))) / PGSIZE;
 
   *free_pages  = free;

@@ -497,7 +497,7 @@ kill(int pid)
   return -1;
 }
 
-// Return the number of active (non-UNUSED) processes.
+// count non-UNUSED procs
 int
 getactiveprocs(void)
 {
