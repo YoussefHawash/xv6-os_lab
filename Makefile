@@ -184,6 +184,7 @@ UPROGS=\
 	_printstats\
 	_save\
 	_sort\
+	_tasks\
 
 fs.img: mkfs README $(UPROGS)
 	./mkfs fs.img README $(UPROGS)

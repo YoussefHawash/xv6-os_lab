@@ -1,4 +1,5 @@
 #include "types.h"
+#include "pinfo.h"
 #include "defs.h"
 #include "param.h"
 #include "memlayout.h"
@@ -531,4 +532,45 @@ procdump(void)
     }
     cprintf("\n");
   }
+}
+
+int getprocinfo(struct pinfo* info, uint pid) {
+  struct proc *p;
+  if(info == 0)
+    return -1;
+  acquire(&ptable.lock);
+  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+    if(p->pid == pid){
+      info->pid = p->pid;
+      info->ppid = p->parent ? p->parent->pid : 0;
+      info->state = p->state;
+      info->sz = p->sz;
+      safestrcpy(info->name, p->name, sizeof(info->name));
+      release(&ptable.lock);
+      return 0;
+    }
+  }
+  release(&ptable.lock);
+  return -1;
+}
+
+int listproc(struct pinfo* infos) {
+  struct proc *p;
+  int count = 0;
+
+  if(infos == 0)
+    return -1;
+  acquire(&ptable.lock);
+  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+    if(p->state != UNUSED){
+      infos[count].pid = p->pid;
+      infos[count].ppid = p->parent ? p->parent->pid : 0;
+      infos[count].state = p->state;
+      infos[count].sz = p->sz;
+      safestrcpy(infos[count].name, p->name, sizeof(infos[count].name));
+      count++;
+    }
+  }
+  release(&ptable.lock);
+  return count;
 }
