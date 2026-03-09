@@ -76,12 +76,11 @@ int main(int argc, char *argv[]) {
     printf(1, "-");
   printf(1, "\n");
   for(i = 0; i < n; i++) {
-    char *st = (infos[i].state >= 0 && infos[i].state <= 5)
-               ? statenames[infos[i].state] : "???";
+    
     printipad(infos[i].pid, 8);
     printipad(infos[i].ppid, 8);
     printipad(infos[i].sz, 10);
-    printpad(st, 10);
+    printpad(statenames[infos[i].state], 10);
     printpad(infos[i].name, 16);
     printf(1, "\n");
   }
