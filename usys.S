@@ -32,3 +32,4 @@ SYSCALL(uptime)
 SYSCALL(getpinfo)
 SYSCALL(listproc)
 SYSCALL(sysinfo)
+

@@ -43,6 +43,20 @@ printipad(int val, int width)
 }
 
 int main(int argc, char *argv[]) {
+  if (argc > 1) {
+    struct pinfo info;
+    int pid = atoi(argv[1]);
+    if(getpinfo(&info, (uint)pid) < 0) {
+      printf(1, "failed for pid %d\n", pid);
+    } else {  
+      printf(1, "PID: %d\n", info.pid);
+      printf(1, "PPID: %d\n", info.ppid);
+      printf(1, "SIZE: %d\n", info.sz);
+      printf(1, "STATE: %s\n", statenames[info.state]);
+      printf(1, "NAME: %s\n", info.name);
+    }
+    exit();
+  }
   struct pinfo infos[NPROC];
   int n, i;
 
