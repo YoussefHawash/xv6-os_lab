@@ -2,7 +2,6 @@ struct buf;
 struct context;
 struct file;
 struct inode;
-struct pinfo;
 struct pipe;
 struct proc;
 struct rtcdate;
@@ -10,6 +9,7 @@ struct spinlock;
 struct sleeplock;
 struct stat;
 struct superblock;
+struct pinfo;
 
 // bio.c
 void            binit(void);
@@ -69,6 +69,7 @@ char*           kalloc(void);
 void            kfree(char*);
 void            kinit1(void*, void*);
 void            kinit2(void*, void*);
+void            getmeminfo_counts(int*, int*);
 
 // kbd.c
 void            kbdintr(void);
@@ -107,6 +108,7 @@ int             pipewrite(struct pipe*, char*, int);
 int             cpuid(void);
 void            exit(void);
 int             fork(void);
+int             getactiveprocs(void);
 int             growproc(int);
 int             kill(int);
 struct cpu*     mycpu(void);

@@ -1,6 +1,6 @@
 #include "types.h"
-#include "pinfo.h"
 #include "defs.h"
+#include "pinfo.h"
 #include "param.h"
 #include "memlayout.h"
 #include "mmu.h"
@@ -497,6 +497,21 @@ kill(int pid)
   return -1;
 }
 
+// Return the number of active (non-UNUSED) processes.
+int
+getactiveprocs(void)
+{
+  struct proc *p;
+  int count = 0;
+
+  acquire(&ptable.lock);
+  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+    if(p->state != UNUSED)
+      count++;
+  release(&ptable.lock);
+  return count;
+}
+
 //PAGEBREAK: 36
 // Print a process listing to console.  For debugging.
 // Runs when user types ^P on console.
@@ -533,7 +548,6 @@ procdump(void)
     cprintf("\n");
   }
 }
-
 int getprocinfo(struct pinfo* info, uint pid) {
   struct proc *p;
   if(info == 0)

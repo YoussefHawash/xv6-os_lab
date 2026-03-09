@@ -1,6 +1,7 @@
 struct stat;
 struct rtcdate;
 struct pinfo;
+struct sysinfo;
 // system calls
 int fork(void);
 int exit(void) __attribute__((noreturn));
@@ -25,6 +26,7 @@ int sleep(int);
 int uptime(void);
 int getpinfo(struct pinfo*, uint);
 int listproc(struct pinfo*);
+int sysinfo(struct sysinfo *);
 // ulib.c
 int stat(const char*, struct stat*);
 char* strcpy(char*, const char*);

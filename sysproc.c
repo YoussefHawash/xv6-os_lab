@@ -7,7 +7,7 @@
 #include "mmu.h"
 #include "proc.h"
 #include "pinfo.h"
-
+#include "sysinfo.h"
 int
 sys_fork(void)
 {
@@ -105,4 +105,30 @@ int sys_listproc(void) {
   if(argptr(0, (void*)&infos, sizeof(struct pinfo) * NPROC) < 0)
     return -1;
   return listproc(infos);
+}
+
+int
+sys_sysinfo(void)
+{
+  struct sysinfo *info;
+  int free_pages, used_pages;
+
+  if(argptr(0, (char**)&info, sizeof(struct sysinfo)) < 0)
+    return -1;
+
+  // uptime: convert ticks to seconds (xv6 timer fires at 100 Hz)
+  acquire(&tickslock);
+  info->uptime = ticks / 100;
+  release(&tickslock);
+
+  // memory: getmeminfo_counts fills (free, used); total = free + used
+  getmeminfo_counts(&free_pages, &used_pages);
+  info->freeram  = (uint)free_pages;
+  info->usedram  = (uint)used_pages;
+  info->totalram = (uint)(free_pages + used_pages);
+
+  // process count: all non-UNUSED slots
+  info->nprocs = (uint)getactiveprocs();
+
+  return 0;
 }

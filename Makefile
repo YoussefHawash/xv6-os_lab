@@ -185,6 +185,8 @@ UPROGS=\
 	_save\
 	_sort\
 	_tasks\
+	_testmeminfo\
+
 
 fs.img: mkfs README $(UPROGS)
 	./mkfs fs.img README $(UPROGS)

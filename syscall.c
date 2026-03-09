@@ -105,6 +105,7 @@ extern int sys_write(void);
 extern int sys_uptime(void);
 extern int sys_getpinfo(void);
 extern int sys_listproc(void);
+extern int sys_sysinfo(void);
 
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
@@ -130,6 +131,7 @@ static int (*syscalls[])(void) = {
 [SYS_close]   sys_close,
 [SYS_getpinfo] sys_getpinfo,
 [SYS_listproc] sys_listproc,
+[SYS_sysinfo]  sys_sysinfo,
 };
 
 void
