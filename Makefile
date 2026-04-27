@@ -189,6 +189,8 @@ UPROGS=\
 	_process_hierarchy\
 	_par\
 	_seq\
+	_setpriority\
+	_printptable\
 
 fs.img: mkfs README numbers.txt $(UPROGS)
 	./mkfs fs.img README numbers.txt $(UPROGS)

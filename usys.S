@@ -33,4 +33,5 @@ SYSCALL(getpinfo)
 SYSCALL(listproc)
 SYSCALL(sysinfo)
 SYSCALL(getppid)
-
+SYSCALL(setpriority)
+SYSCALL(printptable)
