@@ -91,6 +91,7 @@ allocproc(void)
 found:
   p->state = EMBRYO;
   p->pid = nextpid++;
+  p->pr = DEFAULT_PR;
 
   release(&ptable.lock);
 
@@ -612,6 +613,8 @@ int printptable(struct pinfo *info)
 }
 int setpriority(uint pid, int pr)
 {
+  if (pr < MINPR || pr > MAXPR)
+    return -1;
   struct proc *p;
   uint old_pr;
   acquire(&ptable.lock);
