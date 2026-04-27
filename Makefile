@@ -187,9 +187,11 @@ UPROGS=\
 	_tasks\
 	_testmeminfo\
 	_process_hierarchy\
+	_par\
+	_seq\
 
-fs.img: mkfs README $(UPROGS)
-	./mkfs fs.img README $(UPROGS)
+fs.img: mkfs README numbers.txt $(UPROGS)
+	./mkfs fs.img README numbers.txt $(UPROGS)
 
 -include *.d
 
