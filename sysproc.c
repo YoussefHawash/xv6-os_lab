@@ -158,3 +158,10 @@ int sys_printptable(void)
     return -1;
   return printptable(info);
 }
+int sys_getpriority(void)
+{
+  int pid;
+  if (argint(0, &pid) < 0)
+    return -1;
+  return getpriority(pid);
+}

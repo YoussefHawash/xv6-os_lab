@@ -26,3 +26,4 @@
 #define SYS_getppid 25
 #define SYS_setpriority 26
 #define SYS_printptable 27
+#define SYS_getpriority 28

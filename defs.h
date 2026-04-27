@@ -127,6 +127,7 @@ int getprocinfo(struct pinfo *, uint);
 int listproc(struct pinfo *);
 int printptable(struct pinfo *info);
 int setpriority(uint pid, int pr);
+int getpriority(uint pid);
 
 // swtch.S
 void swtch(struct context **, struct context *);

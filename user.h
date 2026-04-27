@@ -30,6 +30,7 @@ int listproc(struct pinfo *);
 int sysinfo(struct sysinfo *);
 int setpriority(uint, int);
 int printptable(struct pinfo *info);
+int getpriority(uint pid);
 // ulib.c
 int stat(const char *, struct stat *);
 char *strcpy(char *, const char *);

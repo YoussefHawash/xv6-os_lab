@@ -191,6 +191,7 @@ UPROGS=\
 	_seq\
 	_setpriority\
 	_printptable\
+	_test\
 
 fs.img: mkfs README numbers.txt $(UPROGS)
 	./mkfs fs.img README numbers.txt $(UPROGS)
